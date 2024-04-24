@@ -32,7 +32,7 @@
                             <form action="{{ url_for('update_status', task_id=task['id']) }}" method="POST">
                                 <div class="input-group">
                                     <select class="form-select" name="status" onchange="this.form.submit()">
-                                        <option value="In Open Task" {% if task['status'] == 'In Open Task' %}selected{% endif %}>In Open Task</option>
+                                        <option value="In Open Task" {% if task['status'] == 'In Open Task' %}selected{% endif %}>Open Task</option>
                                         <option value="In Process" {% if task['status'] == 'In Process' %}selected{% endif %}>In Process</option>
                                         <option value="Completed" {% if task['status'] == 'Completed' %}selected{% endif %}>Completed</option>
                                     </select>
