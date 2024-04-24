@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Task{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <h1 class="text-center mb-4">Edit Task</h1>
+            <form id="editTaskForm" method="POST">
+                <div class="form-group">
+                    <label for="task">Task:</label>
+                    <input type="text" class="form-control" id="task" name="task" value="{{ task[1] }}">
+                </div>
+                <button type="submit" class="btn btn-primary">Update Task</button>
+                <a href="/" class="btn btn-secondary ms-2">Cancel</a>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function completeTask(taskId) {
+            fetch(`/complete/${taskId}`)
+                .then(() => window.location.reload());
+        }
+    </script>
+{% endblock %}

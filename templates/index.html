@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}ToDo List App{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <h1 class="text-center mb-4">ToDo List App</h1>
+            <form id="taskForm" class="mb-3" method="POST">
+                <div class="input-group">
+                    <input type="text" id="taskInput" class="form-control" name="task" placeholder="Enter task...">
+                    <button type="submit" class="btn btn-primary">Add Task</button>
+                </div>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Task</th>
+                        <th scope="col">Created</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in tasks %}
+                    <tr class="{% if task['status'] == 'Completed' %}table-success{% elif task['status'] == 'In Process' %}table-warning{% else %}table-danger{% endif %}">
+                        <th scope="row">{{ task['id'] }}</th>
+                        <td>{{ task['task'] }}</td>
+                        <td>{{ task['created'] }}</td>
+                        <td>
+                            <form action="{{ url_for('update_status', task_id=task['id']) }}" method="POST">
+                                <div class="input-group">
+                                    <select class="form-select" name="status" onchange="this.form.submit()">
+                                        <option value="In Open Task" {% if task['status'] == 'In Open Task' %}selected{% endif %}>In Open Task</option>
+                                        <option value="In Process" {% if task['status'] == 'In Process' %}selected{% endif %}>In Process</option>
+                                        <option value="Completed" {% if task['status'] == 'Completed' %}selected{% endif %}>Completed</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a href="{{ url_for('edit', task_id=task['id']) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{{ url_for('delete', task_id=task['id']) }}" class="btn btn-danger btn-sm">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
